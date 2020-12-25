@@ -71,7 +71,7 @@ def home(request):
         return render(request,'home.html',{'id':"Home Page","data":data,"price":price})
     return redirect('/login/')
 def help(request):
-    return render(request,'help.html',{})
+    return render(request,'help_review.html',{})
 def temp(request):
     return render(request,'temp.html',{})
 def blog(request):
@@ -86,26 +86,11 @@ def registerUser(request):
         auth.create_user_with_email_and_password(username, password)
         auth.sign_in_with_email_and_password(username, password)
         localId=auth.current_user['localId']
-
-
         myfile = request.FILES['logoFile']
         storage.child('startupFiles').child(localId).put(myfile)
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
-
-
         storage.child("shareFiles").child(localId).child(filename).put(myfile)
-
-
-
-
-
-
-
-
-
-
-
         if auth.current_user:
             name=request.POST.get('companyName')
             special=request.POST.get('description')
