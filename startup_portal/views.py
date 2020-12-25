@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
@@ -59,7 +60,7 @@ def login(request):
         email=request.POST.get('email')
         password=request.POST.get('password')
         user=auth.sign_in_with_email_and_password(email, password)
-        return redirect('/')
+        return redirect('/registerUser/')
     return render(request,'login.html',{})
 
 def home(request):
@@ -119,7 +120,7 @@ def registerUser(request):
                 'totalShares':totalShares
 
             })
-            return redirect('/')
+            return HttpResponse("successfully registered")
         else :
             return render(request,'login.html')
     return render(request,'registerstartup.html',{})
